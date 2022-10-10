@@ -6,7 +6,7 @@ from json import load
 @dataclass
 class Data:
     GROUP: str
-    url = "service.aviakat.ru"
+    url = "736572766963652e617669616b61742e7275"  # hex to prevent searching
     port = 4256
     group_codes_path = PosixPath("group_codes.json")
 
@@ -21,5 +21,5 @@ class Data:
 
     @property
     def URL(self):
-        # they still don't have SSL. lol.
-        return f"http://{self.url}:{self.port}/{self.group_code}.htm"
+        decoded_url = bytes.fromhex(self.url).decode("utf-8")
+        return f"http://{decoded_url}:{self.port}/{self.group_code}.htm"
