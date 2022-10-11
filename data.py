@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 from pathlib import PosixPath
 from json import load
+from datetime import datetime, timedelta
 
 
 @dataclass
@@ -23,3 +24,14 @@ class Data:
     def URL(self):
         decoded_url = bytes.fromhex(self.url).decode("utf-8")
         return f"http://{decoded_url}:{self.port}/{self.group_code}.htm"
+
+    @staticmethod
+    def date(day):
+        if day == "today":
+            now = datetime.now()
+            return f"{now.day}.{now.month}.{now.year}"
+        elif day == "tomorrow":
+            tomorrow = datetime.now() + timedelta(days=1)
+            return f"{tomorrow.day}.{tomorrow.month}.{tomorrow.year}"
+        else:
+            raise NotImplementedError(f"{day} is not a valid argument")
